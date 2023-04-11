@@ -16,6 +16,38 @@ class _RegisterScreenState extends State<RegisterScreen> {
       appBar: AppBar(
         title: const Text("Register"),
       ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Form(
+            child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "E-mail",
+                style: TextStyle(fontSize: 20),
+              ),
+              TextFormField(),
+              const SizedBox(height: 15),
+              const Text(
+                "Password",
+                style: TextStyle(fontSize: 20),
+              ),
+              TextFormField(),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  child: const Text(
+                    "Registered",
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  onPressed: () {},
+                ),
+              )
+            ],
+          ),
+        )),
+      ),
     );
   }
 }
