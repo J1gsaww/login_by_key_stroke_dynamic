@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:login_by_key_stroke_dynamic/screens/loginScreen.dart';
+import 'package:login_by_key_stroke_dynamic/screens/registerScreen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,7 +21,12 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const RegisterScreen();
+                    }));
+                  },
                   icon: const Icon(Icons.add),
                   label: const Text(
                     "Register",
@@ -29,7 +36,12 @@ class HomeScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return const LoginScreen();
+                    }));
+                  },
                   icon: const Icon(Icons.login),
                   label: const Text(
                     "Login",
