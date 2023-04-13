@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:form_field_validator/form_field_validator.dart';
+import 'package:login_by_key_stroke_dynamic/model/profile.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -11,6 +13,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
+  Profile profile = Profile();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +33,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: TextStyle(fontSize: 20),
                   ),
                   TextFormField(
+                    validator: MultiValidator([
+                      RequiredValidator(errorText: "Please input your email!"),
+                      EmailValidator(errorText: "Invalid Email format!")
+                    ]),
                     keyboardType: TextInputType.emailAddress,
+                    onSaved: (String? email) {
+                      profile.email = email;
+                    },
                   ),
                   const SizedBox(height: 15),
                   const Text(
@@ -38,7 +48,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     style: TextStyle(fontSize: 20),
                   ),
                   TextFormField(
+                    validator: RequiredValidator(
+                        errorText: "Please input your password!"),
                     obscureText: true,
+                    onSaved: (String? password) {
+                      profile.password = password;
+                    },
                   ),
                   SizedBox(
                     width: double.infinity,
@@ -47,7 +62,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         "Registered",
                         style: TextStyle(fontSize: 20),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
+                          print(
+                              "Email = ${profile.email} password = ${profile.password}");
+                          formKey.currentState!.reset();
+                        }
+                      },
                     ),
                   )
                 ],
