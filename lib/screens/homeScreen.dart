@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:login_by_key_stroke_dynamic/screens/loginScreen.dart';
 import 'package:login_by_key_stroke_dynamic/screens/registerScreen.dart';
 

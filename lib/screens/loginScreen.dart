@@ -6,7 +6,6 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:login_by_key_stroke_dynamic/screens/welcomeScreen.dart';
 
 import '../model/profile.dart';
-import 'homeScreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
