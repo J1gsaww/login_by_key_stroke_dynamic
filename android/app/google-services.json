@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "335355189890",
+    "project_id": "login-by-key-stroke-dynamic",
+    "storage_bucket": "login-by-key-stroke-dynamic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:335355189890:android:973ef904224d895fc6f29b",
+        "android_client_info": {
+          "package_name": "com.example.login_by_key_stroke_dynamic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "335355189890-ih4luvpcs50gc4kip9m5jb684euf7fiu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrCsxEJYihVJIwikEbvDBLVslzq4PukJ0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "335355189890-ih4luvpcs50gc4kip9m5jb684euf7fiu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
