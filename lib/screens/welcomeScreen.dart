@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:lottie/lottie.dart';
 import 'homeScreen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -17,13 +17,34 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Welcome"),
+        backgroundColor: const Color(0xFF95A4DE),
       ),
-      body: Column(children: [
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(children: [
+        const SizedBox(height: 110),
+         SizedBox(
+          width: 400,
+          height: 250,
+          child: Lottie.network('https://assets8.lottiefiles.com/packages/lf20_g3dzz0wz.json'),
+        ),
+        const Text(
+          "Welcome to CosmicShield !",
+           style: TextStyle(fontSize: 25, color: Color(0xFF576CBE),fontWeight: FontWeight.bold),
+        ),  
         Text(
           auth.currentUser!.email!,
-          style: const TextStyle(fontSize: 25),
+          style: TextStyle(fontSize: 25, color: Color(0xFF95A4DE)),
         ),
-        ElevatedButton(
+        SizedBox(height: 8),
+        Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: const Color(0xFF95A4DE),
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+              ),
+            ),
             onPressed: () {
               auth.signOut().then((value) {
                 Navigator.of(context)
@@ -32,8 +53,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 }));
               });
             },
-            child: const Text("Logout"))
+            child: const Text("Logout",style: TextStyle(fontSize: 15),))
+        )
       ]),
+      )     
     );
   }
 }

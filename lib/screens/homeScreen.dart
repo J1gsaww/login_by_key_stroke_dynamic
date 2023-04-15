@@ -1,54 +1,91 @@
 import 'package:flutter/material.dart';
 import 'package:login_by_key_stroke_dynamic/screens/loginScreen.dart';
 import 'package:login_by_key_stroke_dynamic/screens/registerScreen.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Home Screen"),
-      ),
+      backgroundColor: const Color(0xFFEAEDFA),
+      // appBar: AppBar(
+      //   backgroundColor: const Color(0xFF95A4DE),
+      //   title: const Text("Home Screen"),
+      // ),
       body: Padding(
-        padding: const EdgeInsets.fromLTRB(10, 50, 10, 0),
-        child: Column(
-          children: [
-            Image.asset("assets/images/logo.png", height: 100, width: 100),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
+        padding: const EdgeInsets.fromLTRB(10, 30, 10, 0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 400,
+                height: 300,
+                child: Lottie.network('https://assets2.lottiefiles.com/packages/lf20_8zzltjyc.json'),
+              ),
+              const SizedBox(height: 15),
+              SizedBox(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Let's get started with",
+                        style: TextStyle(fontSize: 25, color: Color(0xFF576CBE),fontWeight: FontWeight.bold),
+                      ),
+                      const Text(
+                        "CosmicShield",
+                        style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 23, 32, 71),fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                ),
+              const SizedBox(height: 32),
+              Container(
+                width: 200,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFF95A4DE), // sets the background color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50), // sets the corner radius
+                    ),
+                  ),
                   onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const RegisterScreen();
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                    );
                   },
-                  icon: const Icon(Icons.add),
-                  label: const Text(
-                    "Register",
-                    style: TextStyle(fontSize: 20),
-                  )),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton.icon(
+                  child: const Text('REGISTER'),
+                ),
+              ),
+              const SizedBox(height: 16),
+              Container(
+                width: 200,
+                height: 50,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: const Color(0xFF95A4DE),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
                   onPressed: () {
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const LoginScreen();
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    );
                   },
-                  icon: const Icon(Icons.login),
-                  label: const Text(
-                    "Login",
-                    style: TextStyle(fontSize: 20),
-                  )),
-            )
-          ],
+                  child: const Text('LOGIN'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+
