@@ -23,46 +23,56 @@ class HomeScreen extends StatelessWidget {
               SizedBox(
                 width: 400,
                 height: 300,
-                child: Lottie.network('https://assets2.lottiefiles.com/packages/lf20_8zzltjyc.json'),
+                child: Lottie.network(
+                    'https://assets2.lottiefiles.com/packages/lf20_8zzltjyc.json'),
               ),
               const SizedBox(height: 15),
               SizedBox(
                 child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Let's get started with",
-                        style: TextStyle(fontSize: 25, color: Color(0xFF576CBE),fontWeight: FontWeight.bold),
-                      ),
-                      const Text(
-                        "CosmicShield",
-                        style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 23, 32, 71),fontWeight: FontWeight.bold),
-                      ),
-                    ],
-                  ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Let's get started with",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Color(0xFF576CBE),
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      "CosmicShield",
+                      style: TextStyle(
+                          fontSize: 25,
+                          color: Color.fromARGB(255, 23, 32, 71),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
+              ),
               const SizedBox(height: 32),
-              Container(
+              SizedBox(
                 width: 200,
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: const Color(0xFF95A4DE), // sets the background color
+                    backgroundColor:
+                        const Color(0xFF95A4DE), // sets the background color
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50), // sets the corner radius
+                      borderRadius:
+                          BorderRadius.circular(50), // sets the corner radius
                     ),
                   ),
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const RegisterScreen()),
                     );
                   },
                   child: const Text('REGISTER'),
                 ),
               ),
               const SizedBox(height: 16),
-              Container(
+              SizedBox(
                 width: 200,
                 height: 50,
                 child: ElevatedButton(
@@ -75,7 +85,8 @@ class HomeScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()),
                     );
                   },
                   child: const Text('LOGIN'),
@@ -88,4 +99,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
