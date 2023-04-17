@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   int ncount = 0;
 
+  final KSTController = TextEditingController();
+
   String downdowndisplay = "-";
   String KSTdisplay = "-";
   String Dwelldisplay = "-";
@@ -45,8 +48,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String Keydisplay = "-";
   String KSTavgdisplay = "-";
 
+  List<String> docIDs = [];
+  Future addUserDetailed() async {
+    await FirebaseFirestore.instance.collection('KeyStrokeTime').add({
+      "KST": KSTavg,
+    });
+  }
+
+  Future getDocId() async {
+    await FirebaseFirestore.instance
+        .collection('KeyStrokeTime')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((element) {
+              print(element.reference);
+              docIDs.add(element.reference.id);
+            }));
+  }
+
   @override
   void initState() {
+    getDocId();
     super.initState();
     _stopwatch = Stopwatch();
   }
@@ -89,7 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     double KSTx = 0;
     if (_ncount > 0) {
       KSTx = _down / _ncount;
-      KSTx = KSTx - dwell;
+      KSTx = KSTx + dwell;
       return KSTx.round();
     }
     return 0;
@@ -199,7 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       color: const Color(0xFFE0E4F5),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
-//Algorithm----------------------------------------
+                                    //Algorithm----------------------------------------
                                     child: RawKeyboardListener(
                                       focusNode: mainFocusNode,
                                       autofocus: true,
@@ -308,8 +329,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: TextStyle(fontSize: 20),
                                 ),
                                 onPressed: () async {
+                                  addUserDetailed();
                                   if (formKey.currentState!.validate()) {
                                     formKey.currentState!.save();
+                                    addUserDetailed();
                                     try {
                                       await FirebaseAuth.instance
                                           .createUserWithEmailAndPassword(
@@ -324,6 +347,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               255, 181, 189, 221),
                                           gravity: ToastGravity.TOP,
                                         );
+
                                         formKey.currentState!.reset();
                                         Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(builder: (context) {
@@ -331,6 +355,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           }),
                                         );
                                       });
+                                      //KST Saved///////////////////////////////
+
+                                      //////////////////////////////////////////
                                     } on FirebaseAuthException catch (e) {
                                       Fluttertoast.showToast(
                                         msg: e.message ?? "",
