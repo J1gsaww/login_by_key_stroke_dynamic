@@ -137,13 +137,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 5),
-                          SizedBox(
+                           SizedBox(
                             width: 400,
                             height: 270,
-                            child: Lottie.network(
-                                'https://assets4.lottiefiles.com/packages/lf20_7fy2yzzs.json'),
+                            child: Lottie.network('https://assets4.lottiefiles.com/packages/lf20_7fy2yzzs.json'),
                           ),
                           // Card(
+<<<<<<< HEAD
                           Padding(
                             padding: const EdgeInsets.all(25.0),
                             child: Column(
@@ -278,28 +278,98 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: const Color(0xFFE0E4F5),
                                     borderRadius: BorderRadius.circular(5.0),
                                   ),
-                                  child: TextFormField(
-                                    validator: RequiredValidator(
-                                      errorText: "Please input your password!",
+=======
+                            Padding(
+                               padding: const EdgeInsets.all(25.0),
+                               child: Column(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Welcome back",
+                                        style: TextStyle(fontSize: 25, color: Color(0xFF576CBE),fontWeight: FontWeight.bold),
                                     ),
-                                    obscureText: true,
-                                    onSaved: (String? password) {
-                                      profile.password = password;
-                                    },
-                                  ),
-                                )
-                              ],
-                            ),
+                                    const Text(
+                                      "Enter your credentials to continue.",
+                                       style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 170, 170, 173)),
+                                    ),
+                                    SizedBox(height: 15),
+                                    Row(
+                                      children: [
+                                          Icon(Icons.email, color: Color(0xFF576CBE)),
+                                          const SizedBox(width: 10),
+                                          const Text(
+                                            "E-mail",
+                                            style: TextStyle(fontSize: 20, color: Color(0xFF576CBE)),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: 8),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFE0E4F5),
+                                          borderRadius: BorderRadius.circular(5.0),
+                                        ),
+                                        child: TextFormField(
+                                        validator: MultiValidator([
+                                          RequiredValidator(
+                                            errorText: "Please input your email!",
+                                          ),
+                                          EmailValidator(
+                                            errorText: "Invalid Email format!",
+                                          ),
+                                        ]),
+                                        keyboardType: TextInputType.emailAddress,
+                                        onSaved: (String? email) {
+                                          profile.email = email;
+                                        },
+                                      ),
+                                      ),
+                                      SizedBox(height: 15),
+                                      Row(
+                                        children: [
+                                        Icon(Icons.lock_outline, color: Color(0xFF576CBE)),
+                                        const SizedBox(width: 10),
+                                        const Text(
+                                        "Password",
+                                        style: TextStyle(fontSize: 20, color: Color(0xFF576CBE)),
+                                      ),
+                                    ],
+                                 ),
+                            SizedBox(height: 8),
+                            Container(
+                               decoration: BoxDecoration(
+                                  color: Color(0xFFE0E4F5),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+>>>>>>> ce32c03eddea770b005d750ee3ffb3bbbc23641d
+                                  child: TextFormField(
+                                  validator: RequiredValidator(
+                                  errorText: "Please input your password!",),
+                                  obscureText: true,
+                                  onSaved: (String? password) {
+                                    profile.password = password;
+                                  },
+                                ),
+                              )
+                            ],
                           ),
+<<<<<<< HEAD
 
                           const SizedBox(height: 15),
                           Center(
                               child: SizedBox(
+=======
+                        ),
+                      // ),
+                      SizedBox(height: 15),
+                      Center(
+                        child:SizedBox(
+>>>>>>> ce32c03eddea770b005d750ee3ffb3bbbc23641d
                             width: 200,
                             height: 50,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF95A4DE),
+                                primary: const Color(0xFF95A4DE),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(50),
                                 ),
@@ -328,20 +398,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                     // print(e.code);
                                     Fluttertoast.showToast(
                                         msg: e.message ?? "",
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 181, 189, 221),
+                                        backgroundColor: Color.fromARGB(255, 181, 189, 221),
                                         gravity: ToastGravity.TOP);
+                                    }
                                   }
-                                }
-                              },
-                            ),
-                          ))
+                                },
+                              ),
+                            ) 
+                          )
                         ],
                       ),
                     )),
-              ),
-            );
-          }
+                  ),
+                );
+              }
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),

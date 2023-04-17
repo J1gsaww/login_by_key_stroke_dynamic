@@ -15,53 +15,48 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Welcome"),
-          backgroundColor: const Color(0xFF95A4DE),
+      appBar: AppBar(
+        title: const Text("Welcome"),
+        backgroundColor: const Color(0xFF95A4DE),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(children: [
+        const SizedBox(height: 110),
+         SizedBox(
+          width: 400,
+          height: 250,
+          child: Lottie.network('https://assets8.lottiefiles.com/packages/lf20_g3dzz0wz.json'),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(children: [
-            const SizedBox(height: 110),
-            SizedBox(
-              width: 400,
-              height: 250,
-              child: Lottie.network(
-                  'https://assets8.lottiefiles.com/packages/lf20_g3dzz0wz.json'),
+        const Text(
+          "Welcome to CosmicShield !",
+           style: TextStyle(fontSize: 25, color: Color(0xFF576CBE),fontWeight: FontWeight.bold),
+        ),  
+        Text(
+          auth.currentUser!.email!,
+          style: TextStyle(fontSize: 25, color: Color(0xFF95A4DE)),
+        ),
+        SizedBox(height: 8),
+        Center(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: const Color(0xFF95A4DE),
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+              ),
             ),
-            const Text(
-              "Welcome to CosmicShield !",
-              style: TextStyle(
-                  fontSize: 25,
-                  color: Color(0xFF576CBE),
-                  fontWeight: FontWeight.bold),
-            ),
-            Text(
-              auth.currentUser!.email!,
-              style: const TextStyle(fontSize: 25, color: Color(0xFF95A4DE)),
-            ),
-            const SizedBox(height: 8),
-            Center(
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF95A4DE),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                    ),
-                    onPressed: () {
-                      auth.signOut().then((value) {
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) {
-                          return const HomeScreen();
-                        }));
-                      });
-                    },
-                    child: const Text(
-                      "Logout",
-                      style: TextStyle(fontSize: 15),
-                    )))
-          ]),
-        ));
+            onPressed: () {
+              auth.signOut().then((value) {
+                Navigator.of(context)
+                    .pushReplacement(MaterialPageRoute(builder: (context) {
+                  return const HomeScreen();
+                }));
+              });
+            },
+            child: const Text("Logout",style: TextStyle(fontSize: 15),))
+        )
+      ]),
+      )     
+    );
   }
 }
