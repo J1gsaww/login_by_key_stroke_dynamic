@@ -137,234 +137,167 @@ class _LoginScreenState extends State<LoginScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 5),
-                           SizedBox(
+                          SizedBox(
                             width: 400,
                             height: 270,
-                            child: Lottie.network('https://assets4.lottiefiles.com/packages/lf20_7fy2yzzs.json'),
+                            child: Lottie.network(
+                                'https://assets4.lottiefiles.com/packages/lf20_7fy2yzzs.json'),
                           ),
                           // Card(
-<<<<<<< HEAD
                           Padding(
-                            padding: const EdgeInsets.all(25.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "Welcome back",
-                                  style: TextStyle(
-                                      fontSize: 25,
-                                      color: Color(0xFF576CBE),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const Text(
-                                  "Enter your credentials to continue.",
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color:
-                                          Color.fromARGB(255, 170, 170, 173)),
-                                ),
-                                ///////////////////////////////////////////////
-                                const SizedBox(height: 10),
-                                Text(
-                                  "Button = $Keydisplay |Dwell time = $Dwelldisplay |Flight time = $Flightdisplay |KST = $KSTdisplay",
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: Color(0xFF576CBE),
-                                      fontWeight: FontWeight.bold),
-                                ),
+                              padding: const EdgeInsets.all(25.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Text(
+                                    "Welcome back",
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        color: Color(0xFF576CBE),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const Text(
+                                    "Enter your credentials to continue.",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color:
+                                            Color.fromARGB(255, 170, 170, 173)),
+                                  ),
+                                  ///////////////////////////////////////////////
+                                  const SizedBox(height: 10),
+                                  Text(
+                                    "Button = $Keydisplay |Dwell time = $Dwelldisplay |Flight time = $Flightdisplay |KST = $KSTdisplay",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xFF576CBE),
+                                        fontWeight: FontWeight.bold),
+                                  ),
 
-                                const SizedBox(height: 5),
-                                Text(
-                                  "Current KST average: $KSTavgdisplay",
-                                  style: TextStyle(
-                                      fontSize: 14,
-                                      color: Color(0xFF576CBE),
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                //////////////////////////////////////////////
-                                const SizedBox(height: 15),
-                                Row(
-                                  children: const [
-                                    Icon(Icons.email, color: Color(0xFF576CBE)),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      "E-mail",
-                                      style: TextStyle(
-                                          fontSize: 20,
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    "Current KST average: $KSTavgdisplay",
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: Color(0xFF576CBE),
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  //////////////////////////////////////////////
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.email,
                                           color: Color(0xFF576CBE)),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Container(
+                                      SizedBox(width: 10),
+                                      Text(
+                                        "E-mail",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Color(0xFF576CBE)),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Container(
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFE0E4F5),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                      //Algorithm----------------------------------------
+                                      child: RawKeyboardListener(
+                                        focusNode: mainFocusNode,
+                                        autofocus: true,
+                                        onKey: (RawKeyEvent event) {
+                                          //
+                                          final key = event.logicalKey;
+                                          if (event is RawKeyDownEvent) {
+                                            downdown = _milliseconds;
+                                            flighttime = downdown - dwelltime;
+                                            ncount++;
+                                            //int KST_compute(int _down, int _ncount, int dwell)
+                                            KST = KST_compute(
+                                                downdown, ncount, dwelltime);
+                                            KSTavg =
+                                                KSTavg_compute(KST, ncount);
+                                            //////////////setState//////////////
+                                            setState(() {
+                                              KSTavgdisplay = "$KSTavg";
+                                              downdowndisplay = "$downdown";
+                                              Flightdisplay = "$flighttime";
+                                              Keydisplay = key.keyLabel;
+                                              Dwelldisplay = "$dwelltime";
+                                              KSTdisplay = "$KST";
+                                            });
+                                            ///////////////////////////////////
+
+                                            _stopTimer();
+                                            _resetTimer();
+                                            //initState();
+                                            _startTimer();
+                                          }
+                                          if (event is RawKeyUpEvent) {
+                                            dwelltime = _milliseconds;
+                                          }
+                                          //test //print(event.runtimeType.toString());
+                                        },
+                                        //Algorithm--------------------------------------
+
+                                        child: TextFormField(
+                                          validator: MultiValidator([
+                                            RequiredValidator(
+                                              errorText:
+                                                  "Please input your email!",
+                                            ),
+                                            EmailValidator(
+                                              errorText:
+                                                  "Invalid Email format!",
+                                            ),
+                                          ]),
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          onSaved: (String? email) {
+                                            profile.email = email;
+                                          },
+                                        ),
+                                      )),
+                                  const SizedBox(height: 15),
+                                  Row(
+                                    children: const [
+                                      Icon(Icons.lock_outline,
+                                          color: Color(0xFF576CBE)),
+                                      SizedBox(width: 10),
+                                      //////////////////////////////////////
+                                      Text(
+                                        //"$KST",
+                                        "Password",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Color(0xFF576CBE)),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Container(
                                     decoration: BoxDecoration(
                                       color: const Color(0xFFE0E4F5),
                                       borderRadius: BorderRadius.circular(5.0),
                                     ),
-                                    //Algorithm----------------------------------------
-                                    child: RawKeyboardListener(
-                                      focusNode: mainFocusNode,
-                                      autofocus: true,
-                                      onKey: (RawKeyEvent event) {
-                                        //
-                                        final key = event.logicalKey;
-                                        if (event is RawKeyDownEvent) {
-                                          downdown = _milliseconds;
-                                          flighttime = downdown - dwelltime;
-                                          ncount++;
-                                          //int KST_compute(int _down, int _ncount, int dwell)
-                                          KST = KST_compute(
-                                              downdown, ncount, dwelltime);
-                                          KSTavg = KSTavg_compute(KST, ncount);
-                                          //////////////setState//////////////
-                                          setState(() {
-                                            KSTavgdisplay = "$KSTavg";
-                                            downdowndisplay = "$downdown";
-                                            Flightdisplay = "$flighttime";
-                                            Keydisplay = key.keyLabel;
-                                            Dwelldisplay = "$dwelltime";
-                                            KSTdisplay = "$KST";
-                                          });
-                                          ///////////////////////////////////
-
-                                          _stopTimer();
-                                          _resetTimer();
-                                          //initState();
-                                          _startTimer();
-                                        }
-                                        if (event is RawKeyUpEvent) {
-                                          dwelltime = _milliseconds;
-                                        }
-                                        //test //print(event.runtimeType.toString());
+                                    child: TextFormField(
+                                      validator: RequiredValidator(
+                                        errorText:
+                                            "Please input your password!",
+                                      ),
+                                      obscureText: true,
+                                      onSaved: (String? password) {
+                                        profile.password = password;
                                       },
-                                      //Algorithm--------------------------------------
-
-                                      child: TextFormField(
-                                        validator: MultiValidator([
-                                          RequiredValidator(
-                                            errorText:
-                                                "Please input your email!",
-                                          ),
-                                          EmailValidator(
-                                            errorText: "Invalid Email format!",
-                                          ),
-                                        ]),
-                                        keyboardType:
-                                            TextInputType.emailAddress,
-                                        onSaved: (String? email) {
-                                          profile.email = email;
-                                        },
-                                      ),
-                                    )),
-                                const SizedBox(height: 15),
-                                Row(
-                                  children: const [
-                                    Icon(Icons.lock_outline,
-                                        color: Color(0xFF576CBE)),
-                                    SizedBox(width: 10),
-                                    //////////////////////////////////////
-                                    Text(
-                                      //"$KST",
-                                      "Password",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: Color(0xFF576CBE)),
                                     ),
-                                  ],
-                                ),
-                                const SizedBox(height: 8),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xFFE0E4F5),
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-=======
-                            Padding(
-                               padding: const EdgeInsets.all(25.0),
-                               child: Column(
-                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "Welcome back",
-                                        style: TextStyle(fontSize: 25, color: Color(0xFF576CBE),fontWeight: FontWeight.bold),
-                                    ),
-                                    const Text(
-                                      "Enter your credentials to continue.",
-                                       style: TextStyle(fontSize: 15, color: Color.fromARGB(255, 170, 170, 173)),
-                                    ),
-                                    SizedBox(height: 15),
-                                    Row(
-                                      children: [
-                                          Icon(Icons.email, color: Color(0xFF576CBE)),
-                                          const SizedBox(width: 10),
-                                          const Text(
-                                            "E-mail",
-                                            style: TextStyle(fontSize: 20, color: Color(0xFF576CBE)),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 8),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          color: Color(0xFFE0E4F5),
-                                          borderRadius: BorderRadius.circular(5.0),
-                                        ),
-                                        child: TextFormField(
-                                        validator: MultiValidator([
-                                          RequiredValidator(
-                                            errorText: "Please input your email!",
-                                          ),
-                                          EmailValidator(
-                                            errorText: "Invalid Email format!",
-                                          ),
-                                        ]),
-                                        keyboardType: TextInputType.emailAddress,
-                                        onSaved: (String? email) {
-                                          profile.email = email;
-                                        },
-                                      ),
-                                      ),
-                                      SizedBox(height: 15),
-                                      Row(
-                                        children: [
-                                        Icon(Icons.lock_outline, color: Color(0xFF576CBE)),
-                                        const SizedBox(width: 10),
-                                        const Text(
-                                        "Password",
-                                        style: TextStyle(fontSize: 20, color: Color(0xFF576CBE)),
-                                      ),
-                                    ],
-                                 ),
-                            SizedBox(height: 8),
-                            Container(
-                               decoration: BoxDecoration(
-                                  color: Color(0xFFE0E4F5),
-                                  borderRadius: BorderRadius.circular(5.0),
-                                ),
->>>>>>> ce32c03eddea770b005d750ee3ffb3bbbc23641d
-                                  child: TextFormField(
-                                  validator: RequiredValidator(
-                                  errorText: "Please input your password!",),
-                                  obscureText: true,
-                                  onSaved: (String? password) {
-                                    profile.password = password;
-                                  },
-                                ),
-                              )
-                            ],
-                          ),
-<<<<<<< HEAD
-
+                                  )
+                                ],
+                              )),
                           const SizedBox(height: 15),
                           Center(
                               child: SizedBox(
-=======
-                        ),
-                      // ),
-                      SizedBox(height: 15),
-                      Center(
-                        child:SizedBox(
->>>>>>> ce32c03eddea770b005d750ee3ffb3bbbc23641d
                             width: 200,
                             height: 50,
                             child: ElevatedButton(
@@ -398,20 +331,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                     // print(e.code);
                                     Fluttertoast.showToast(
                                         msg: e.message ?? "",
-                                        backgroundColor: Color.fromARGB(255, 181, 189, 221),
+                                        backgroundColor:
+                                            Color.fromARGB(255, 181, 189, 221),
                                         gravity: ToastGravity.TOP);
-                                    }
                                   }
-                                },
-                              ),
-                            ) 
-                          )
+                                }
+                              },
+                            ),
+                          ))
                         ],
                       ),
                     )),
-                  ),
-                );
-              }
+              ),
+            );
+          }
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
