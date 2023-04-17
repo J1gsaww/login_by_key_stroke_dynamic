@@ -21,8 +21,11 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final formKey = GlobalKey<FormState>();
   Profile profile = Profile();
+
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
   FocusNode mainFocusNode = FocusNode();
+  CollectionReference KeyST =
+      FirebaseFirestore.instance.collection("KeyStrokeTime");
 
   //timer
   int dwelltime = 0;
@@ -39,7 +42,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   int ncount = 0;
 
-  final KSTController = TextEditingController();
+  final emailController = TextEditingController();
 
   String downdowndisplay = "-";
   String KSTdisplay = "-";
@@ -48,34 +51,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
   String Keydisplay = "-";
   String KSTavgdisplay = "-";
 
-  List<String> docIDs = [];
-  Future addUserDetailed() async {
-    await FirebaseFirestore.instance.collection('KeyStrokeTime').add({
-      "KST": KSTavg,
-    });
-  }
-
-  Future getDocId() async {
-    await FirebaseFirestore.instance
-        .collection('KeyStrokeTime')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((element) {
-              print(element.reference);
-              docIDs.add(element.reference.id);
-            }));
-  }
-
   @override
   void initState() {
-    getDocId();
+    //getDocId();
     super.initState();
     _stopwatch = Stopwatch();
-  }
-
-  @override
-  void dispose() {
-    _stopwatch.stop();
-    super.dispose();
   }
 
   void _startTimer() {
@@ -103,6 +83,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
       _milliseconds = 0;
     });
     _stopwatch.reset();
+  }
+
+  @override
+  void dispose() {
+    _stopwatch.stop();
+    super.dispose();
   }
 
 //timer
@@ -329,10 +315,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: TextStyle(fontSize: 20),
                                 ),
                                 onPressed: () async {
-                                  addUserDetailed();
                                   if (formKey.currentState!.validate()) {
                                     formKey.currentState!.save();
-                                    addUserDetailed();
+                                    KeyST.add({"fname": "ok"});
                                     try {
                                       await FirebaseAuth.instance
                                           .createUserWithEmailAndPassword(
@@ -356,7 +341,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         );
                                       });
                                       //KST Saved///////////////////////////////
-
                                       //////////////////////////////////////////
                                     } on FirebaseAuthException catch (e) {
                                       Fluttertoast.showToast(

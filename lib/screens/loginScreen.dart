@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ///////////////////////////////////////////////
                                   const SizedBox(height: 10),
                                   Text(
-                                    "Button = $Keydisplay |Dwell time = $Dwelldisplay |Flight time = $Flightdisplay |KST = $KSTdisplay",
+                                    "Button = $Keydisplay |Dwell time = $Dwelldisplay |Flight time = $Flightdisplay",
                                     style: TextStyle(
                                         fontSize: 12,
                                         color: Color(0xFF576CBE),
@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                   const SizedBox(height: 5),
                                   Text(
-                                    "Current KST average: $KSTavgdisplay",
+                                    "Current KST: $KSTavgdisplay",
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: Color(0xFF576CBE),
@@ -232,7 +232,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                             _stopTimer();
                                             _resetTimer();
-                                            //initState();
                                             _startTimer();
                                           }
                                           if (event is RawKeyUpEvent) {
