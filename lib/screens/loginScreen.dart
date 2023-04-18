@@ -329,16 +329,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                         .signInWithEmailAndPassword(
                                             email: profile.email ?? "",
                                             password: profile.password ?? "")
-                                        .then((value) {
+                                        .then((value) async {
                                       formKey.currentState!.reset();
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(builder: (context) {
-                                        return const WelcomeScreen();
-                                      }));
+
+                                      // Retrieve the Firestore data for the current user
+                                      String userId = FirebaseAuth
+                                          .instance.currentUser!.uid;
+                                      DocumentSnapshot userSnapshot =
+                                          await FirebaseFirestore.instance
+                                              .collection('KeyStrokeTime')
+                                              .doc(userId)
+                                              .get();
+
+                                      // Compare the KSTavg from the user login with the Firestore data
+                                      int firestoreKSTavg =
+                                          userSnapshot.get('KSTavg');
+                                      if (KSTavg <= firestoreKSTavg) {
+                                        // KSTavg matches, redirect to welcome screen
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const WelcomeScreen();
+                                        }));
+                                      } else {
+                                        // KSTavg does not match, show error message
+                                        Fluttertoast.showToast(
+                                            msg: "Invalid keystroke time!",
+                                            backgroundColor: Color.fromARGB(
+                                                255, 181, 189, 221),
+                                            gravity: ToastGravity.TOP);
+                                        formKey.currentState!.reset();
+                                      }
                                     });
                                   } on FirebaseAuthException catch (e) {
-                                    // print(e.message);
-                                    // print(e.code);
                                     Fluttertoast.showToast(
                                         msg: e.message ?? "",
                                         backgroundColor:
