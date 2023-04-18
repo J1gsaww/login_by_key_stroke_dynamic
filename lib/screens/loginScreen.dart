@@ -93,6 +93,25 @@ class _LoginScreenState extends State<LoginScreen> {
     return sum;
   }
 
+  int _calThreshold(int count) {
+    int threshold = 30;
+    if (count >= 11 && count <= 20) {
+      return threshold = 40;
+    } else if (count >= 21 && count <= 30) {
+      return threshold = 50;
+    } else if (count > 30) {
+      return threshold = 60;
+    }
+    return threshold;
+  }
+
+  bool ThresholdAuth(int threshold, int firebase_KST, int current_KST) {
+    int Pluspass = firebase_KST + threshold;
+    int Minuspass = firebase_KST - threshold;
+    if (current_KST >= Minuspass && current_KST <= Pluspass) return true;
+    return false;
+  }
+
   List<String> docIDs = [];
   Future getDocId() async {
     await FirebaseFirestore.instance
@@ -337,21 +356,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                           .instance.currentUser!.uid;
                                       DocumentSnapshot userSnapshot =
                                           await FirebaseFirestore.instance
-                                              .collection('KeyStrokeTime')
+                                              .collection('UserAuth')
                                               .doc(userId)
                                               .get();
 
                                       // Compare the KSTavg from the user login with the Firestore data
                                       int firestoreKSTavg =
                                           userSnapshot.get('KSTavg');
-                                      if (KSTavg <= firestoreKSTavg) {
-                                        // KSTavg matches, redirect to welcome screen
+                                      int firestireNcount =
+                                          userSnapshot.get('cout');
+                                      //Threshold
+                                      int thresholdAuth =
+                                          _calThreshold(firestireNcount);
+                                      bool check = ThresholdAuth(thresholdAuth,
+                                          firestoreKSTavg, KSTavg);
+                                      //bool ThresholdAuth(int threshold, int firebase_KST, int current_KST)
+                                      if (check == true) {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) {
                                           return const WelcomeScreen();
                                         }));
-                                      } else {
+                                      }
+                                      // KSTavg matches, redirect to welcome screen
+                                      else {
                                         // KSTavg does not match, show error message
                                         Fluttertoast.showToast(
                                             msg: "Invalid keystroke time!",
