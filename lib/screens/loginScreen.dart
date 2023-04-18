@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
   int KSTavg = 0;
 
   List<int> sigmaKST = <int>[];
-
+  final emailController = TextEditingController();
   bool _isRunning = false;
   late Stopwatch _stopwatch;
 
@@ -44,18 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
   String Flightdisplay = "-";
   String Keydisplay = "-";
   String KSTavgdisplay = "-";
-
-  @override
-  void initState() {
-    super.initState();
-    _stopwatch = Stopwatch();
-  }
-
-  @override
-  void dispose() {
-    _stopwatch.stop();
-    super.dispose();
-  }
 
   void _startTimer() {
     setState(() {
@@ -102,6 +91,29 @@ class _LoginScreenState extends State<LoginScreen> {
       sigmaKST.forEach((e) => sum += e);
     }
     return sum;
+  }
+
+  List<String> docIDs = [];
+  Future getDocId() async {
+    await FirebaseFirestore.instance
+        .collection('UserAuth')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((document) {
+              docIDs.add(document.reference.id);
+            }));
+  }
+
+  @override
+  void initState() {
+    getDocId();
+    super.initState();
+    _stopwatch = Stopwatch();
+  }
+
+  @override
+  void dispose() {
+    _stopwatch.stop();
+    super.dispose();
   }
 
   @override
@@ -214,7 +226,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                             downdown = _milliseconds;
                                             flighttime = downdown - dwelltime;
                                             ncount++;
-                                            //int KST_compute(int _down, int _ncount, int dwell)
                                             KST = KST_compute(
                                                 downdown, ncount, dwelltime);
                                             KSTavg =
@@ -237,11 +248,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                           if (event is RawKeyUpEvent) {
                                             dwelltime = _milliseconds;
                                           }
-                                          //test //print(event.runtimeType.toString());
                                         },
                                         //Algorithm--------------------------------------
 
                                         child: TextFormField(
+                                          controller: emailController,
                                           validator: MultiValidator([
                                             RequiredValidator(
                                               errorText:

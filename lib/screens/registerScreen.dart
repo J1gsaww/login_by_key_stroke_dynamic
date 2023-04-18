@@ -24,8 +24,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   final Future<FirebaseApp> firebase = Firebase.initializeApp();
   FocusNode mainFocusNode = FocusNode();
-  CollectionReference KeyST =
-      FirebaseFirestore.instance.collection("KeyStrokeTime");
+  CollectionReference KeyST = FirebaseFirestore.instance.collection("UserAuth");
 
   //timer
   int dwelltime = 0;
@@ -171,7 +170,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ///////////////////////////////////////////////
                                 const SizedBox(height: 10),
                                 Text(
-                                  "Button = $Keydisplay |Dwell time = $Dwelldisplay |Flight time = $Flightdisplay |KST = $KSTdisplay",
+                                  "Button = $Keydisplay |Dwell time = $Dwelldisplay |Flight time = $Flightdisplay",
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Color(0xFF576CBE),
@@ -180,7 +179,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                                 const SizedBox(height: 5),
                                 Text(
-                                  "Current KST average: $KSTavgdisplay",
+                                  "Current KST: $KSTavgdisplay",
                                   style: TextStyle(
                                       fontSize: 14,
                                       color: Color(0xFF576CBE),
@@ -211,13 +210,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       focusNode: mainFocusNode,
                                       autofocus: true,
                                       onKey: (RawKeyEvent event) {
-                                        //
                                         final key = event.logicalKey;
                                         if (event is RawKeyDownEvent) {
                                           downdown = _milliseconds;
                                           flighttime = downdown - dwelltime;
                                           ncount++;
-                                          //int KST_compute(int _down, int _ncount, int dwell)
                                           KST = KST_compute(
                                               downdown, ncount, dwelltime);
                                           KSTavg = KSTavg_compute(KST, ncount);
@@ -239,11 +236,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         if (event is RawKeyUpEvent) {
                                           dwelltime = _milliseconds;
                                         }
-                                        //test //print(event.runtimeType.toString());
                                       },
                                       //Algorithm--------------------------------------
 
                                       child: TextFormField(
+                                        controller: emailController,
                                         validator: MultiValidator([
                                           RequiredValidator(
                                               errorText:
@@ -325,7 +322,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       )
                                           .then((value) async {
                                         await KeyST.doc(value.user!.uid).set({
+                                          'Email': emailController.text.trim(),
                                           'KSTavg': KSTavg,
+                                          'cout': ncount - 1,
                                         });
                                       }).then((value) {
                                         Fluttertoast.showToast(
