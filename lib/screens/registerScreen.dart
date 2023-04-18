@@ -317,14 +317,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 onPressed: () async {
                                   if (formKey.currentState!.validate()) {
                                     formKey.currentState!.save();
-                                    KeyST.add({"fname": "ok"});
                                     try {
                                       await FirebaseAuth.instance
                                           .createUserWithEmailAndPassword(
                                         email: profile.email ?? "",
                                         password: profile.password ?? "",
                                       )
-                                          .then((value) {
+                                          .then((value) async {
+                                        await KeyST.doc(value.user!.uid).set({
+                                          'KSTavg': KSTavg,
+                                        });
+                                      }).then((value) {
                                         Fluttertoast.showToast(
                                           msg:
                                               "Account has been created successfully.",
