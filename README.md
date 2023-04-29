@@ -2,6 +2,11 @@
 
 A term Project of ITCS461_Computer And Communication Security
 
+# Project Description 
+The primary goal of this project is to enhance the traditional username and password authentication mechanism by incorporating keystroke dynamics. 
+By analyzing how a user types their password, our system will provide an additional layer of security to ensure the validity of the user. 
+This approach will help to mitigate unauthorized access and improve overall user authentication.
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
