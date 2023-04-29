@@ -14,6 +14,17 @@ This project is a starting point for a Flutter application.
 - 6388055	Dhammawat Siribunchawan
 - 6388119	Kittipat Arpanon
 
+## Snapshot
+
+- `Technology`<br>
+<img src="/snapshot/technology.png" alt="technology">
+
+- `Login`<br>
+<img src="/snapshot/login.png" alt="login">
+
+- `Register`<br>
+<img src="/snapshot/register.png" alt="register">
+
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
