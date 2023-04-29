@@ -9,7 +9,7 @@ This approach will help to mitigate unauthorized access and improve overall user
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+By executing this command to start the project
 
 ### `flutter pub get`
 ### `flutter run`
