@@ -1,4 +1,4 @@
-# login_by_key_stroke_dynamic
+# Login By Key Stroke Dynamic using FLutter and Firebase
 
 A term Project of ITCS461_Computer And Communication Security
 
