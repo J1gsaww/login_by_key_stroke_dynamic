@@ -1,4 +1,4 @@
-# Login By Key Stroke Dynamic using FLutter and Firebase
+# Login By Key Stroke Dynamic using Flutter and Firebase
 
 A term Project of ITCS461_Computer And Communication Security
 
